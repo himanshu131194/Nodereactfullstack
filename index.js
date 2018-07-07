@@ -20,6 +20,11 @@ mongoose.connect(keys.mongoURL, (err)=>{
   (err) ? console.log(err) : console.log("Connected to the mongodb");
 });
 
+app.get('/', (req ,res)=>{
+    res.send({
+        key : "value"
+    });
+})
 app.get('/api/current_user', (req ,res)=>{
     console.log(req.user);
     res.send(req.user);
