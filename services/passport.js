@@ -24,22 +24,18 @@ passport.use(
      proxy : true
   }, (accessToken, refreshToken, profile, done)=>{
     User.findOne({googleId: profile.id}).
-        then((existingUser)=>{
-            console.log(existingUser);
-           if(existingUser){
-             done(null, existingUser);
-           }else{
-             let user = new User({
-                googleId : profile.id
-             });
-             user.save((err)=>{
-                  if(err)
-                    console.log(err);
-             }).
-             then((user)=>{
-                done(null, user);
-             });
-           }
+         then((existingUser)=>{
+               if(existingUser){
+                 done(null, existingUser);
+               }else{
+                 new User({
+                    googleId : profile.id
+                 }).
+                 save().
+                 then((user)=>{
+                    done(null, user);
+                 });
+               }
         })
     console.log(profile.id);
   })
